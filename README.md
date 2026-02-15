@@ -152,3 +152,7 @@ Babel is processing `core-js` with `useBuiltIns: "entry"`, causing it to inject 
 
 
 Also temporary you should install webcrypto-liner as a dependency.
+
+Use query parameters to pass the SDK_KEY and EVENT_ID.
+
+`?sdk_key=YOUR_KEY&event_id=YOUR_EVENT`

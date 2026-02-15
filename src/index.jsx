@@ -5,9 +5,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var StreamLayer = require('@streamlayer/web-os');
 
-var PRODUCTION = false;
-var SDK_KEY = '5c451de248dfda796b3005331d42e3f88048d78a00d4628b172d841f2d2e1aac';
-var EVENT_ID = '9405';
+var searchParams = new URLSearchParams(window.location.search)
+
+var PRODUCTION = searchParams.get('production') === null
+var SDK_KEY = searchParams.get('sdk_key')
+var EVENT_ID = searchParams.get('event_id')
 
 function Demo() {
   const [isPaused, setIsPaused] = React.useState(false);
