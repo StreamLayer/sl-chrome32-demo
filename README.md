@@ -89,22 +89,6 @@ Key points:
 - **Exclude `core-js`** — it's already ES5; re-processing with `useBuiltIns: "entry"` creates infinite polyfill-insertion loops
 - **Exclude `@streamlayer/web-os`** — the CJS build is already transpiled to ES5 and includes its own `core-js` requires; running Babel's `"entry"` mode over it would strip those requires
 
-### 4. Additional resolve tweaks
-
-```js
-resolve: {
-  alias: {
-    // webcrypto-liner's "browser" field points at an IIFE (.mjs) with ES6+
-    // that babel-loader skips; force the CJS build instead
-    'webcrypto-liner': path.resolve(__dirname, 'node_modules/webcrypto-liner/build/index.js'),
-  },
-  fallback: {
-    // webcrypto-core does require('crypto') for Node; not needed in browser
-    crypto: false,
-  },
-},
-```
-
 ## Polyfills
 
 Chrome 32 is missing many APIs the SDK depends on. The `@streamlayer/web-os/polyfills` file provides all necessary shims and **must be imported before any SDK code**:
@@ -114,16 +98,12 @@ Chrome 32 is missing many APIs the SDK depends on. The `@streamlayer/web-os/poly
 | `core-js/stable` + `regenerator-runtime` | ES6+ language features | `core-js`, `regenerator-runtime` |
 | `TextEncoder` / `TextDecoder` | Chrome 38 | `text-encoding-utf-8` |
 | `IntersectionObserver` | Chrome 51 | `intersection-observer` |
-| `crypto.subtle` (SubtleCrypto) | Chrome 37 | `webcrypto-liner` |
-| `crypto.randomUUID()` | Chrome 92 | inline (16-byte random + formatting) |
 | `ResizeObserver` | Chrome 64 | `resize-observer-polyfill` |
 | `ReadableStream` / `WritableStream` / `TransformStream` | Chrome 43–67 | `web-streams-polyfill` |
 | `fetch` / `Response` / `Headers` / `Request` | Chrome 42 | `whatwg-fetch` |
 | `AbortController` + fetch patch | Chrome 66 | `abortcontroller-polyfill` |
 | `Response.body` (ReadableStream) | varies | inline wrapper over `arrayBuffer()` |
 | `MediaQueryList.addEventListener` | Chrome 50 | inline (delegates to `addListener`) |
-
-The polyfills file also patches `webcrypto-liner`'s AES-KW wrap/unwrap stubs (which expect a native SubtleCrypto that Chrome 32 doesn't have) using `asmcrypto.js` AES-ECB as the underlying primitive.
 
 ## Project Structure
 
@@ -146,12 +126,6 @@ A dependency is being parsed as ESM. Add `sourceType: "unambiguous"` to `babel-l
 
 **Infinite loop / stack overflow during build**
 Babel is processing `core-js` with `useBuiltIns: "entry"`, causing it to inject polyfill imports into `core-js` itself. Make sure `core-js` is excluded from the loader rule.
-
-**`Cannot resolve module 'crypto'`**
-`webcrypto-core` (a dependency of `webcrypto-liner`) tries to `require('crypto')`. Add `resolve.fallback: { crypto: false }`.
-
-
-Also temporary you should install webcrypto-liner as a dependency.
 
 Use query parameters to pass the SDK_KEY and EVENT_ID.
 

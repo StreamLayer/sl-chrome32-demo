@@ -57,17 +57,6 @@ module.exports = {
     // (CJS) entry from package.json "exports" maps. Without this, webpack picks
     // the "module" condition → lib/es/ builds that contain un-transpiled ES6+.
     conditionNames: ['webpack', 'require', 'browser', 'default'],
-    alias: {
-      // Force CJS entry so webpack doesn't pick the "browser" field
-      // (webcrypto-liner.shim.mjs), which is an IIFE expecting globals
-      // and contains un-transpiled ES6+ that babel-loader skips for .mjs
-      'webcrypto-liner': path.resolve(__dirname, 'node_modules/webcrypto-liner/build/index.js'),
-    },
-    fallback: {
-      // webcrypto-core tries require('crypto') (Node built-in);
-      // not needed in browser — the liner provides its own SubtleCrypto
-      crypto: false,
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),

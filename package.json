@@ -4,14 +4,13 @@
   "type": "commonjs",
   "scripts": {
     "dev": "webpack serve",
-    "start": "ws --directory dist --spa index.html --compress --port 3000",
+    "start": "ws --directory docs --spa index.html --compress --port 3000",
     "build": "rm -rf dist && webpack --mode production"
   },
   "dependencies": {
-    "@streamlayer/web-os": "^0.8.1",
+    "@streamlayer/web-os": "^0.8.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "webcrypto-liner": "^1.4.3"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

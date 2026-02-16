@@ -35,35 +35,36 @@ function Demo() {
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      <video
-        ref={videoPlayerRef}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        poster="https://developers.google.com/interactive-media-ads/images/vsi_poster.jpg"
-        playsInline
-        muted
-        onPause={handlePause}
-        onPlay={handlePlay}
-        loop
-        autoPlay
-        controls={!isPaused}
-        controlsList="nodownload nofullscreen noremoteplayback"
-      >
-        <source src="//s0.2mdn.net/4253510/google_ddm_animation_480P.mp4" />
-        <source src="//s0.2mdn.net/4253510/google_ddm_animation_480P.webm" />
-      </video>
-      <StreamLayer.StreamLayerSDKTvPauseAd
+      <StreamLayer.StreamLayerSDKTv
         showPauseAd={isPaused}
         videoPlayerController={videoPlayerController}
         options={{
           showPauseButton: true,
         }}
-        vastUrls={[
+        pauseAdVastUrl={[
           {
             template: 'default',
             url: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23213969138/adxvsporta&description_url=http%3A%2F%2Fstreamlayer.io&tfcd=0&npa=0&sz=400x300%7C640x480%7C640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator=',
           },
         ]}
-      />
+      >
+        <video
+          ref={videoPlayerRef}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          poster="https://developers.google.com/interactive-media-ads/images/vsi_poster.jpg"
+          playsInline
+          muted
+          onPause={handlePause}
+          onPlay={handlePlay}
+          loop
+          autoPlay
+          controls={!isPaused}
+          controlsList="nodownload nofullscreen noremoteplayback"
+        >
+          <source src="//s0.2mdn.net/4253510/google_ddm_animation_480P.mp4" />
+          <source src="//s0.2mdn.net/4253510/google_ddm_animation_480P.webm" />
+        </video>
+      </StreamLayer.StreamLayerSDKTv>
     </div>
   )
 }
