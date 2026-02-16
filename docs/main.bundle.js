@@ -51694,8 +51694,7 @@ function Demo() {
     },
     pauseAdVastUrl: [{
       template: 'default',
-      url: 'https://roku.streamlayer.io/pause-ads/vast/non-linear.xml'
-      // url: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23213969138/adxvsporta&description_url=http%3A%2F%2Fstreamlayer.io&tfcd=0&npa=0&sz=400x300%7C640x480%7C640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator=',
+      url: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23213969138/adxvsporta&description_url=http%3A%2F%2Fstreamlayer.io&tfcd=0&npa=0&sz=400x300%7C640x480%7C640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
     }]
   }, /*#__PURE__*/React.createElement("video", {
     ref: videoPlayerRef,
@@ -51721,9 +51720,8 @@ function Demo() {
 }
 function App() {
   return /*#__PURE__*/React.createElement(StreamLayer.StreamLayerProvider, {
-    sdkKey: SDK_KEY
-    // event={EVENT_ID}
-    ,
+    sdkKey: SDK_KEY,
+    event: EVENT_ID,
     production: PRODUCTION
   }, /*#__PURE__*/React.createElement(Demo, null));
 }
